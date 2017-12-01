@@ -13,23 +13,41 @@
 // 方式一
   var myVariable = {
      init : function(){
-       document.write("方式一：封装进变量对象，成为变量属性");
+       document.write("方式一：封装进变量对象，成为变量属性<br>");
      },
   }
   //调用方法,在载入html文件的时候就会执行init函数。
   myVariable.init();
 //方式一结束
 
-//方式二:匿名函数()();
+//方式二:匿名立即执行函数()();
   (function(){
     function init(){
-      document.write("方式二：匿名函数");
+      document.write("方式二：匿名函数<br>");
     }
     // 调用方式
    init();
   })();
-
   //已封装在匿名函数内部，所以再在外部调用时会提示init()没有定义。
   // init();
+
+  //模块之间的交互
+  var interact = (function(){
+      var inner=2;
+      function init(){
+        document.write("模块交互-init<br>");
+      }
+      function action(){
+        document.write("模块交互-action<br>");
+      }
+
+      return {
+        init_test :init
+      }
+  })();
+//调用方式
+  interact.init_test();
+  interact.action();//如果，没有再return中设置。这里会提示action没有定义
+
 </script>
 </html>
