@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style type="text/css">
+    body{margin:0;padding:0;}
+    #big {
+          border: 1px solid #FF3300;
+          width: 100%;
+          height: 300px;
+          position: relative;
+          padding: 20px 100px;
+      }
+      button{margin-top: 20px;}
+
+      #small {
+          background: #99CC00;
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          cursor: pointer;
+      }
+    </style>
+</head>
+<body>
+  <div id="big">
+      <span>姓名：<span class="name"></span></span></br>
+      <span>手机号码：<span class="phone"></span></span></br>
+      <span>所在医院：<span class="hospital"></span></span></br>
+      <button class="add">点击</button>
+
+  </div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript">
+var obj = "ll";
+$(".add").click(function(){
+  $.ajax({
+           url: "http://172.16.10.75:8081/mockjsdata/4/doctor_info",
+           async: true,
+           data: obj,
+           type: "POST",
+           success: function(data){
+                  $(".name").text(data.name);
+                  $(".phone").text(data.phone);
+                  $(".hospital").text(data.hospital);
+           },
+           error: function(data){
+             console.log("report submit failed");
+           }
+  });
+});
+
+</script>
+</body>
+</html>

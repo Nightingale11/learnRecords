@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>解决全局变量污染</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+// 方式一
+  var myVariable = {
+     init : function(){
+       document.write("方式一：封装进变量对象，成为变量属性");
+     },
+  }
+  //调用方法,在载入html文件的时候就会执行init函数。
+  myVariable.init();
+//方式一结束
+
+//方式二:匿名函数()();
+  (function(){
+    function init(){
+      document.write("方式二：匿名函数");
+    }
+    // 调用方式
+   init();
+  })();
+
+  //已封装在匿名函数内部，所以再在外部调用时会提示init()没有定义。
+  // init();
+</script>
+</html>

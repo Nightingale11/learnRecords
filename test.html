@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style type="text/css">
+    body{margin:0;padding:0;}
+    #wrap{width:300px;height:200px;border:1px solid #FFFFCC;background-color:#CCFFFF;position:absolute;}
+    #moveHere{cursor: move;width:300px;height: 30px;text-align: center;line-height:30px;background-color:#FFCCCC;}
+    </style>
+</head>
+<body>
+<div id="wrap">
+<div id="moveHere"></div>
+</div>
+<script type="text/javascript">
+var moveHere=document.getElementById("moveHere");
+var wrap=document.getElementById("wrap");
+var winW=document.documentElement.clientWidth || document.body.clientWidth;
+var winH=document.documentElement.clientHeight || document.body.clientHeight;
+maxW=winW-wrap.offsetWidth;
+maxH=winH-wrap.offsetHeight;
+window.onload=function(){
+    wrap.style.left=(maxW/2)+"px";
+    wrap.style.top=(maxH/2)+"px";
+    moveHere.onmousedown=mousedown;
+    moveHere.onmouseup=mouseup;
+}
+function mousedown(event){
+    event=event||window.event;
+    var disx = event.clientX-wrap.offsetLeft;
+    var disy = event.clientY-wrap.offsetTop;
+    document.onmousemove = function(event){
+        event=event||window.event;
+        move(event,disx,disy);
+    }
+}
+function move(event,disx,disy){
+    var x = event.clientX-disx;
+    var y = event.clientY-disy;
+    if(x<0){
+        x=0;
+    }else if(x>maxW){
+        x=maxW;
+    }
+    if(y<0){
+        y=0;
+    }else if(y>maxH){
+        y=maxH;
+    }
+    wrap.style.left=x+"px";
+    wrap.style.top=y+"px";
+}
+function mouseup(){
+    document.onmousemove=null;
+    document.onmouseup=null;
+}
+</script>
+</body>
+</html>

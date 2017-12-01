@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+<title>js 图片 拖动 复制</title>
+<script language=javascript>
+
+var Obj;
+
+function DragStart(obj)
+{
+  //去年复制部分
+  //可以在母图片imgA 加onmousemove=MouseMove()
+  //onmouseup=MouseUp() 则只是拖动图片
+  //---------复制 开始----------
+  var i=0;
+  var newName = obj.id+"1";
+  while(document.all(newName)!=null)
+  {
+     i++;
+     newName = obj.id+i;
+  }
+  var strHTML = "<img id='"+newName+"' src='" +obj.src+"'";
+  //放开此句 则新的图片亦支持 拖动 复制
+  //不放开 则只有母图片imgA支持拖动复制
+  strHTML+= " ondragstart=DragStart(this) ";
+  strHTML+= " onmousemove=MouseMove() ";
+  strHTML+= " onmouseup=MouseUp() ";
+  strHTML+= " style='position:absolute; ";
+  strHTML+= " top:"+obj.style.top+"; left:"+obj.style.left+"' ";
+  strHTML+= " /> ";
+  obj.parentElement.innerHTML += strHTML;
+  Obj=document.all(newName);
+  //---------复制 结束----------
+
+  //Obj = obj;
+  Obj.setCapture();
+  Obj.l=event.x-Obj.style.pixelLeft;
+  Obj.t=event.y-Obj.style.pixelTop;
+}
+
+function MouseMove()
+{
+  if(Obj!=null)
+  {
+    Obj.style.left = event.x-Obj.l;
+    Obj.style.top = event.y-Obj.t;
+  }
+}
+
+function MouseUp()
+{
+  if(Obj!=null)
+  {
+    Obj.releaseCapture();
+    Obj=null;
+  }
+}
+
+</script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <img id="imgA" src="img/PathPlanetLogoStatic.png" ondragstart=DragStart(this)
+        style="position:absolute; top:100px; left:100px;" />
+    </form>
+</body>
+</html>
